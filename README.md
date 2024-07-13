@@ -13,7 +13,7 @@ MONGO_URI={insert the connection uri to your database}
 ...
 ```
 
-`Mongoose` was my Object Data Modeling(ODM) library of choice for the connection between my mongoDB and the node.js environment.
+`Mongoose` was my Object Data Modeling(ODM) library of choice for the connection between my mongoDB and the node.js environment. Why an Object Data Modeling library? Because mongodb by itself lacks schema. Mongoose equips us with the ability to formulate  models and constrictions i.e schemas
 
 # Install
 
