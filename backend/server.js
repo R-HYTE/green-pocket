@@ -1,7 +1,7 @@
 import { config } from 'dotenv';
 import express from 'express';
 import router from './routes/products.js';
-import mongoose, { mongo } from 'mongoose';
+import mongoose from 'mongoose';
 
 config();
 const app = express();
