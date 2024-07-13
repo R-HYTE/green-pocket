@@ -1,21 +1,28 @@
 import { Router } from "express";
+import productModel from "../models/product.model.js";
 
-const router = Router();
+const productsRouter = Router();
 
-router.get('/', (req, res) => {
+productsRouter.get('/', (req, res) => {
     res.json({mssg: "Product found"});
 });
 
-router.post('/', (req, res) => {
-    res.json({mssg: "Product Saved"});
+productsRouter.post('/', async (req, res) => {
+    try {
+        const { image, category, description, price, quantity } = req.body;
+        const product = await productModel.create({ image, category, description, price, quantity });
+        res.status(201).json(product);
+    } catch (error) {
+        res.status(400).json({error: error.message});
+    }
 });
 
-router.put('/:id', (req, res) => {
+productsRouter.put('/:id', (req, res) => {
     res.json({mssg: "Product Updated"});
 });
 
-router.delete('/:id', (req, res) => {
+productsRouter.delete('/:id', (req, res) => {
     res.json({mssg: "Product Deleted"});
 });
 
-export default router;
+export default productsRouter;
