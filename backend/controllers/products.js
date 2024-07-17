@@ -1,9 +1,23 @@
 import ProductModel from "../models/product.model.js";
 
-// GET all products
+// GET all products or search for products
 export const getProducts = async (req, res) => {
+    const { search } = req.query;
+    let query = {};
+
+    if (search) {
+        // Modify the query to search for products by name, category, or other fields
+        query = {
+            $or: [
+                { name: { $regex: search, $options: "i" } },
+                { category: { $regex: search, $options: "i" } },
+                { description: { $regex: search, $options: "i" } }
+            ]
+        };
+    }
+
     try {
-        const products = await ProductModel.find({}).sort({ createdAt: -1 });
+        const products = await ProductModel.find(query).sort({ createdAt: -1 });
         if (!products.length) return res.status(404).json({ error: "No products found" });
         res.status(200).json(products);
     } catch (error) {
@@ -11,7 +25,7 @@ export const getProducts = async (req, res) => {
     }
 };
 
-// Get a specific product
+// GET a specific product
 export const getProduct = async (req, res) => {
     try {
         const { id } = req.params;
@@ -27,8 +41,8 @@ export const getProduct = async (req, res) => {
 export const postProduct = async (req, res) => {
     try {
         const { image_url, category, description, price, quantity } = req.body;
-        if (!category || !description || !price || !quantity) return res.status(400).json({ error: "Category, description, price and quantity are required" });
-        const product = await ProductModel.create({ image_url, category, description, price, quantity });
+        if (!category || !description || !price || !quantity) return res.status(400).json({ error: "Category, description, price, and quantity are required" });
+        const product = await ProductModel.create({ image_url: image_url || null, category, description, price, quantity });
         res.status(201).json(product);
     } catch (error) {
         res.status(500).json({ error: error.message });
