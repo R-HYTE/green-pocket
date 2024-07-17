@@ -1,5 +1,5 @@
 function ProductDetails({ product }) {
-    const { category, description, image_url: Poster } = product;
+    const { category, description, image_url: Poster, price } = product;
     return (
         <div className="product">
             <div>
@@ -13,6 +13,7 @@ function ProductDetails({ product }) {
             <div>
                 <span>{category}</span>
                 <h3>{description}</h3>
+                <p>Ksh {price}</p>
             </div>
         </div>
     )
