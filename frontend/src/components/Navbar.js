@@ -12,7 +12,10 @@ function Navbar() {
     <header>
       <div className="container">
         <Link to="/">
-          <h1>GreenPocket</h1>
+          <h1>
+            <span className="orange-text">Green</span>
+            <span className="green-text">Pocket</span>
+          </h1>
         </Link>
         <nav className={isOpen ? 'open' : ''}>
           <Link to="/" onClick={toggleMenu}>Home</Link>
