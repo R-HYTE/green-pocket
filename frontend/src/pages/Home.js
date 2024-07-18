@@ -6,7 +6,6 @@ function Home() {
     const [searchTerm, setSearchTerm] = useState("");
     const [products, setProducts] = useState([]);
 
-    // Fetch all products or search for products based on the search term
     const fetchProducts = async (term = "") => {
         try {
             const response = await fetch(`/api/products${term ? `?search=${term}` : ''}`);
@@ -46,7 +45,6 @@ function Home() {
                     onClick={handleSearch}
                 />
             </div>
-
             <div className="products">
                 {products.length > 0 ? (
                     <div className="container">
