@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { CartContext } from './CartContext';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { getTotalItems } = useContext(CartContext);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -20,6 +22,10 @@ function Navbar() {
         <nav className={isOpen ? 'open' : ''}>
           <Link to="/" onClick={toggleMenu}>Home</Link>
           <Link to="/about" onClick={toggleMenu}>About</Link>
+          <Link to="/cart" className="cart" onClick={toggleMenu}>
+            <i className="fas fa-shopping-cart"></i>
+            <span>{getTotalItems()}</span>
+          </Link>
         </nav>
         <div className="hamburger" onClick={toggleMenu}>
           <div className="bar"></div>

@@ -1,12 +1,26 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { CartContext } from "./CartContext";
 
 function ProductDetails({ product }) {
     const { category, description, image_url: Poster, price } = product;
+    const { cart, addToCart, removeFromCart } = useContext(CartContext);
 
-    const [quantity, setQuantity] = useState(0);
+    // Find the product in the cart to get its current quantity
+    const cartItem = cart.find(item => item.id === product.id);
+    const initialQuantity = cartItem ? cartItem.quantity : 0;
 
-    const handleAddToCart = () => setQuantity(prevQuantity => prevQuantity + 1);
-    const handleRemoveFromCart = () => quantity > 0 && setQuantity(prevQuantity => prevQuantity - 1);
+    // Local state for managing quantity within the component
+    const [quantity, setQuantity] = useState(initialQuantity);
+
+    const handleAddToCart = () => {
+        addToCart(product);
+        setQuantity(prevQuantity => prevQuantity + 1); // Update local state after adding to cart
+    };
+
+    const handleRemoveFromCart = () => {
+        removeFromCart(product);
+        setQuantity(prevQuantity => (prevQuantity > 0 ? prevQuantity - 1 : 0)); // Update local state after removing from cart
+    };
 
     return (
         <div className="product">
@@ -24,7 +38,7 @@ function ProductDetails({ product }) {
             <div className="quantity-controls">
                 <button onClick={handleAddToCart}>+</button>
                 <span>{quantity}</span>
-                <button onClick={handleRemoveFromCart}>-</button>
+                <button onClick={handleRemoveFromCart} disabled={quantity === 0}>-</button>
             </div>
         </div>
     );
