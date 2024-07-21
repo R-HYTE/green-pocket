@@ -14,12 +14,12 @@ function ProductDetails({ product }) {
 
     const handleAddToCart = () => {
         addToCart(product);
-        setQuantity(prevQuantity => prevQuantity + 1); // Update local state after adding to cart
+        setQuantity(prevQuantity => prevQuantity + 1);
     };
 
     const handleRemoveFromCart = () => {
         removeFromCart(product);
-        setQuantity(prevQuantity => (prevQuantity > 0 ? prevQuantity - 1 : 0)); // Update local state after removing from cart
+        setQuantity(prevQuantity => (prevQuantity > 0 ? prevQuantity - 1 : 0));
     };
 
     return (
